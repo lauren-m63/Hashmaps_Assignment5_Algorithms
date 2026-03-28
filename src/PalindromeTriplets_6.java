@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PalindromeTriplets_6 {
@@ -30,7 +31,43 @@ Constraints: • 1 ≤ n ≤ 300 • 0 ≤ s.length ≤ 300 • s contains only 
     public static List<List<Integer>> palindromeTriplets(String[] words) {
         List<List<Integer>> res = new ArrayList<>();
 
-        return words;
+        if (words == null || words.length < 3) {
+            return res;
+        }
+
+
+
+        // do the hasmap so we know which word is which like indexing them basically wooo
+
+        HashMap<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }// end for loop for hashmaping
+
+
+
+        // next lets try every pair for certain not all three words together
+        // so test each pair which is like that other sorting one maube
+        // that was like better than bubble or not bubble sort but the one where you dont look at the earlier index i think i am thinking ofthe better bubble but this isnt relal that
+
+        //it is the double nested though
+
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                if (i==j)continue;
+
+                String togeher =  words[i] + words[j];
+
+
+                // now ughhhhhhh
+                // FINISH THIS PART SPLIT AND FIND PALINDROME
+
+            }// end j loop
+        }// end i loop
+
+
+
+        return res;
     }
 
 }// LAST BRACKET
