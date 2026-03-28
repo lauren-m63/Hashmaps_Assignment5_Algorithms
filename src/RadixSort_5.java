@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class RadixSort_5 {
 
@@ -37,6 +38,9 @@ going through the string in whole i have to do its like for i and then look at t
             return arr;
         }
 
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].toLowerCase();
+        }
 
         // so first im going to find my like max string so i can adjust the null chaacrters on each side so they are all same length ao loop through frist
 
@@ -61,31 +65,30 @@ going through the string in whole i have to do its like for i and then look at t
 
             ///sort them here into buckets by first letter then sort those buckets later
             HashMap<Character, List<String>> buckets = new HashMap<>();
-            buckets.put('\0', new ArrayList<>());
+            buckets.put(Character.valueOf(('\0')), new ArrayList<>());
             for (char c = 'a'; c <= 'z'; c++) {
-                buckets.put(c, new ArrayList<>());
+                buckets.put(Character.valueOf(c), new ArrayList<>());
             }
 
+
+            //
             int index = 0;
             for (String s : paddedArray) {
-                char c = s.charAt(x);
-                buckets.get(c).add(s);
+                char c = Character.toLowerCase(s.charAt(x));
+                buckets.get(Optional.of(c)).add(s);
             }
 
-            for (String s : buckets.get('\0')) {
+            for (String s : buckets.get(Optional.of('\0'))) {
                 paddedArray[index++] = s;
             }
 
             // BUCKETS
             for (char c = 'a'; c <= 'z'; c++) {
-                for (String s : buckets.get(c)) {
+                for (String s : buckets.get(Optional.of(c))) {
                     paddedArray[index++] = s;
                 }
             }
 
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] = paddedArray[i].replace("\0", "");
-            }
 
         }// end for loop
 

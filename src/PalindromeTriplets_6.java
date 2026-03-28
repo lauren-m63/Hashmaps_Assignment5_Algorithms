@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class PalindromeTriplets_6 {
 
@@ -41,10 +39,10 @@ Constraints: • 1 ≤ n ≤ 300 • 0 ≤ s.length ≤ 300 • s contains only 
 
         HashMap<String, Integer> map = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
-            map.put(words[i], i);
+            map.put(words[i].toLowerCase(), Integer.valueOf(i));
         }// end for loop for hashmaping
 
-
+        Set<String> seen = new HashSet<>();
 
         // next lets try every pair for certain not all three words together
         // so test each pair which is like that other sorting one maube
@@ -53,15 +51,63 @@ Constraints: • 1 ≤ n ≤ 300 • 0 ≤ s.length ≤ 300 • s contains only 
         //it is the double nested though
 
         for (int i = 0; i < words.length; i++) {
-            for (int j = i + 1; j < words.length; j++) {
+            for (int j = 0; j < words.length; j++) {
                 if (i==j)continue;
 
-                String togeher =  words[i] + words[j];
+                String togeher = (words[i] + words[j]).toLowerCase();
 
 
                 // now ughhhhhhh
                 // FINISH THIS PART SPLIT AND FIND PALINDROME
 
+
+                for (int split = 0; split <= togeher.length(); split++) {
+
+                    String prefix = togeher.substring(0, split);
+                    String suffix = togeher.substring(split);
+
+                    // CASE A: prefix is a palindrome
+                    // words[k] + words[i] + words[j] = palindrome
+                    if (isPalindrome(prefix)) {
+                        String reverseSuffix = new StringBuilder(suffix).reverse().toString();
+                        if (map.containsKey(reverseSuffix)) {
+                            int k = map.get(reverseSuffix);
+                            // make sure all three indices are different
+                            if (k != i && k != j) {
+                                List<Integer> triplet = new ArrayList<>();
+                                triplet.add(Integer.valueOf(k));
+                                triplet.add(Integer.valueOf(i));
+                                triplet.add(Integer.valueOf(j));
+                                String key = k + "," + i + "," + j; // FIX: unique triplet
+                                if (!seen.contains(key)) {
+                                    seen.add(key);
+                                    res.add(triplet);
+                                }
+                            }
+                        }
+                    }
+
+                   // this part is for if the suffix is the palinfrome
+                    if (split != togeher.length() && isPalindrome(suffix)) {
+                        String reversePrefix = new StringBuilder(prefix).reverse().toString();
+                        if (map.containsKey(reversePrefix)) {
+                            int k = map.get(reversePrefix);
+                            // make sure all three indices are different
+                            if (k != i && k != j) {
+                                List<Integer> triplet = new ArrayList<>();
+                                triplet.add(Integer.valueOf(i));
+                                triplet.add(Integer.valueOf(j));
+                                triplet.add(Integer.valueOf(k));
+                                String key = i + "," + j + "," + k;
+                                if (!seen.contains(key)) {
+                                    seen.add(key);
+                                    res.add(triplet);
+                                }
+                            }
+                        }
+                    }
+
+                } // end split loop
             }// end j loop
         }// end i loop
 
@@ -70,4 +116,19 @@ Constraints: • 1 ≤ n ≤ 300 • 0 ≤ s.length ≤ 300 • s contains only 
         return res;
     }
 
+    private static boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
 }// LAST BRACKET
+
+
