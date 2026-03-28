@@ -21,6 +21,8 @@ Sample Output ama, amaterasu, amazingly , amazon, amazonia, gojo, google, hydra,
 
     you can create buckets hooray and i f it starts with like a put in a bucket then sort each of those buckets also because multiple a but ab vs az
 
+ohh okay but i have to do everything at the same time so i have to make teh strings equal length im not like
+going through the string in whole i have to do its like for i and then look at the index of everything for the one i index thing oay
 
 
      */
@@ -31,6 +33,30 @@ Sample Output ama, amaterasu, amazingly , amazon, amazonia, gojo, google, hydra,
             return arr;
         }
 
+
+        // so first im going to find my like max string so i can adjust the null chaacrters on each side so they are all same length ao loop through frist
+
+        // like columsn and rows
+
+        int highestLength =0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length() > highestLength) {
+                highestLength = arr[i].length();
+            }
+        } // end for loop
+
+        String[] paddedArray = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            paddedArray[i] = (arr[i]);
+            while(paddedArray[i].length() > highestLength) {
+                paddedArray[i] = paddedArray[i] + "/";
+            }
+        } // end for loop
+
+        for (int i = highestLength -1; i >= arr.length; i--) {
+
+            ///
+        }
 
         return arr;
     }
