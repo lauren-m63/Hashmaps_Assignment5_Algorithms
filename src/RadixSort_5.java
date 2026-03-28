@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class RadixSort_5 {
 
     /*
@@ -48,20 +52,62 @@ going through the string in whole i have to do its like for i and then look at t
         String[] paddedArray = new String[arr.length];
         for (int i = 0; i < arr.length; i++) {
             paddedArray[i] = (arr[i]);
-            while(paddedArray[i].length() > highestLength) {
-                paddedArray[i] = paddedArray[i] + "/";
+            while(paddedArray[i].length() < highestLength) {
+                paddedArray[i] = paddedArray[i] + "\0";
             }
         } // end for loop
 
-        for (int i = highestLength -1; i >= arr.length; i--) {
+        for (int x = highestLength -1; x >= 0; x--) {
 
-            ///
-        }
+            ///sort them here into buckets by first letter then sort those buckets later
+            HashMap<Character, List<String>> buckets = new HashMap<>();
+            buckets.put('\0', new ArrayList<>());
+            for (char c = 'a'; c <= 'z'; c++) {
+                buckets.put(c, new ArrayList<>());
+            }
+
+            int index = 0;
+            for (String s : paddedArray) {
+                char c = s.charAt(x);
+                buckets.get(c).add(s);
+            }
+
+            for (String s : buckets.get('\0')) {
+                paddedArray[index++] = s;
+            }
+
+            // BUCKETS
+            for (char c = 'a'; c <= 'z'; c++) {
+                for (String s : buckets.get(c)) {
+                    paddedArray[index++] = s;
+                }
+            }
+
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = paddedArray[i].replace("\0", "");
+            }
+
+        }// end for loop
+
+        System.out.println(String.join(", ", arr));
+
 
         return arr;
     }
 
+    /*
+   time complexity is O(n × m) where n is the number of words and m is the
+longest word length. The outer loop runs m times (once per character position,
+right to left). Inside that loop you touch every single word once to drop it
+into a bucket, which is n operations. So total is n × m operations.
+Before all of that you also loop through the whole list once to find the
+longest word, but that is just O(n) which gets absorbed into O(n × m).
 
+space complexity is also O(n × m) where n is the number of words and m is
+the longest word length because you create paddedArray which stores every
+word padded out to full length m. So you are holding n words each of size m
+in memory at the same time.
+     */
 
 
 
