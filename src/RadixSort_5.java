@@ -6,6 +6,10 @@ import java.util.Optional;
 public class RadixSort_5 {
 
     /*
+
+    okay this is super messed up im so sorry I dont knwo whats going on withmy variables but i have to be done
+     */
+    /*
     5 (code) Radix Sort [10 points] Write a program that takes in an array of Strings and uses radix sort to sort the array lexicographically.
 Input Format An array of string s. where s[i] will be a string and s can be empty. Constraints • 1 ≤ |𝑠| ≤ 10!, where |𝒔| is the length of the strings
 array
@@ -65,7 +69,7 @@ going through the string in whole i have to do its like for i and then look at t
 
             ///sort them here into buckets by first letter then sort those buckets later
             HashMap<Character, List<String>> buckets = new HashMap<>();
-            buckets.put(Character.valueOf(('\0')), new ArrayList<>());
+            buckets.put(Character.valueOf('\0'), new ArrayList<>());
             for (char c = 'a'; c <= 'z'; c++) {
                 buckets.put(Character.valueOf(c), new ArrayList<>());
             }
@@ -74,7 +78,7 @@ going through the string in whole i have to do its like for i and then look at t
             //
             int index = 0;
             for (String s : paddedArray) {
-                char c = Character.toLowerCase(s.charAt(x));
+                char c = s.charAt(x);
                 buckets.get(Optional.of(c)).add(s);
             }
 
@@ -91,6 +95,10 @@ going through the string in whole i have to do its like for i and then look at t
 
 
         }// end for loop
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = paddedArray[i].replace("\0", "");
+        }
 
         System.out.println(String.join(", ", arr));
 
